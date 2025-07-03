@@ -1,3 +1,12 @@
+/**
+ * In this version is when we need to manage the memory limitations, is less efficient, but consume less memory.
+ *
+ * Time Complexity: O(n^3)
+ * Memory Complexity: O(1) or O(R)
+ *
+ * @param {*} array
+ * @returns {Array<{pA: number, pB: number, sum: number}>}
+ */
 export const detectSums = (array) => {
   if (!Array.isArray(array)) {
     throw new Error("Input is not an array");
@@ -23,6 +32,15 @@ export const detectSums = (array) => {
   return results;
 };
 
+/**
+ * In this version we need time efficiency, so we use a Map to index the values of the array.
+ *
+ * Time Complexity: O(n^2)
+ * Memory Complexity: O(n)
+ *
+ * @param {*} array
+ * @returns {Array<{pA: number, pB: number, sum: number}>}
+ */
 export const detectSumsEfficient = (array) => {
   if (!Array.isArray(array)) {
     throw new Error("Input is not an array");
@@ -64,11 +82,22 @@ export const detectSumsEfficient = (array) => {
 };
 
 export function calculateResult(input) {
+  // return error if the input is empty
+  if (!input) {
+    return { input: [], result: "", error: "Write something" };
+  }
   const parsedInput = input.split(",").map((i) => parseInt(i.trim(), 10));
+
+  // return error if the input is not a valid number
+  if (parsedInput.some((i) => isNaN(i))) {
+    return { input: parsedInput, result: "", error: "Write something valid" };
+  }
+
   let error = null;
   let result = "";
+
   try {
-    result = detectSums(input);
+    result = detectSums(parsedInput);
   } catch (e) {
     error = e.message;
   }
